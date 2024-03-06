@@ -1,0 +1,16 @@
+<!-- Paging -->
+<ul class="pagination pull-right">
+  <!-- Dấu nháy để trách xác định lỗi sai của javascript -->
+  <%if(page > 1) { %>
+  <li><a href="javascript:void(0)" onclick="goToPage('<%=page - 1%>')">Trang trước</a></li>
+  <% } %>
+  <!-- Không được dùng const phải dùng let -->
+  <!-- Tại vì i++ thay đổi giá trị của i -->
+  <%for(let i = 1; i <= totalPage; i++) {%>
+  <li class="<%=i == page ? 'active':'' %>"><a href="javascript:void(0)" onclick="goToPage('<%=i%>')"><%=i%></a></li>
+  <% } %>
+  <%if(page < totalPage) { %>
+  <li><a href="javascript:void(0)" onclick="goToPage('<%=page + 1%>')">Trang sau</a></li>
+  <% } %>
+</ul>
+<!-- End paging -->
