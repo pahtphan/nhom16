@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<ht lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Nhân viên</title>
+      <!-- Create favicon -->
+      <link rel="shortcut icon" type="image/x-icon" href="/images/logo.jpg" />
+      <!-- Custom fonts for this template-->
+      <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="/css/sb-admin.css" rel="stylesheet">
+      <link href="/css/admin.css" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   </head>
+   <body id="page-top">
+      <%- include ('../components/nav_bar.ejs') %>
+      <div id="wrapper">
+         <!-- Sidebar -->
+         <%- include ('../components/menu.ejs') %>
+         <div id="content-wrapper">
+            <div class="container-fluid">
+               <!-- Breadcrumbs-->
+               <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                     <a href="#">Quản lý</a>
+                  </li>
+                  <li class="breadcrumb-item active">Nhân viên</li>
+               </ol>
+               <!-- DataTables Example -->
+               <div class="action-bar">
+                  <input type="button" onclick="window.location.href = '/admin/Staff/addStaff'" class="btn btn-primary btn-sm" value="Thêm" name="add">
+               </div>
+               <div class="card mb-3">
+                  <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+							   <tr>
+                           <th></th>
+								   <th >Tên </th>
+								   <th >Tên đăng nhập</th>
+								   <th >Email</th>
+								   <th >Số điện thoại</th>
+								   <th> Vai trò </th>
+								   <th></th>
+								   <th></th>
+							   </tr>
+							</thead>
+							<tbody id="staff_tab">
+							   
+							</tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+               <div class="container my-auto">
+                  <div class="copyright text-center my-auto">
+                     <span>Copyright © Thầy Lộc 2017</span>
+                  </div>
+               </div>
+            </footer>
+         </div>
+         <!-- /.content-wrapper -->
+      </div>
+      <!-- /#wrapper -->
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+      </a>
+
+      
+      <!-- Logout Modal-->
+
+      <%- include ('../components/Logout_pane.ejs') %>
+
+      <div class="modal fade" style="display: none;padding:2%; backdrop-filter:grayscale(1) blur(2px)" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+         <div class="modal-dialog" style="display:flex; justify-content:center; align-items:center" role="document" >
+            <div class="modal-content" style="width:100vw">
+              <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" onclick="disappearChangeStaff()" aria-label="Close">
+                <span aria-hidden="true" >×</span>
+                </button>
+              </div>
+              <div class="modal-body" style="overflow-y: scroll;height: 80vh; ">
+               <p style="font-weight:bold;color: red;">Nhân viên bạn muốn xóa đang đảm nhiệm một số đơn hàng, bạn có muốn dảm nhiệm lại cho nhân viên khác không?</p>
+               <table class="table table-hover" id="dataTable" cellspacing="0">
+               <thead>
+                  <tr>
+                    <th>Mã nhân viên</th>
+                    <th>Tên nhân viên</th>
+                    <th></th>
+                  </tr>
+               </thead>
+               <tbody id="staff_change_tab">
+                  
+               </tbody>
+            </table>
+            </div>
+            </div>
+         </div>
+       </div>
+
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core pluavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Page levugin JavaScript-->
+      <script src="/vendor/datatables/jquery.dataTables.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+      <script src="/js/listStaff.js"></script>
+      <!-- Custom ss for all pages-->
+      <script src="/js/sb-admin.min.js"></script>
+      <!-- Demo scrfor this page-->
+      <script src="/js/demo/datatables-demo.js"></script>
+      <script src="/js/admin.js"></script>
+   </body>
+</ht

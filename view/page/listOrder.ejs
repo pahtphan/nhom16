@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Đơn hàng</title>
+      <!-- Create favicon -->
+      <link rel="shortcut icon" type="image/x-icon" href="/images/logo.jpg" />
+      <!-- Custom fonts for this template-->
+      <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="/css/sb-admin.css" rel="stylesheet">
+      <link href="/css/admin.css" rel="stylesheet">
+   </head>
+   <body id="page-top">
+      <%- include ('../components/nav_bar.ejs') %>
+
+      <div id="wrapper">
+         <!-- Sidebar -->
+       
+         <%- include ('../components/menu.ejs') %>
+
+         <div id="content-wrapper">
+            <div class="container-fluid">
+               <!-- Breadcrumbs-->
+               <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                     <a href="#">Quản lý</a>
+                  </li>
+                  <li class="breadcrumb-item active">Đơn hàng</li>
+               </ol>
+               <!-- DataTables Example -->
+               <div class="action-bar">
+                  <input type="button" onclick="window.location.href='/admin/AddOrder'" class="btn btn-primary btn-sm" value="Thêm" name="add">
+                  <input type="button" class="btn btn-danger btn-sm" onclick="del_choose_order()" value="Xóa" name="delete">
+               </div>
+               <div class="card mb-3">
+                  <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+            							<thead>
+            							  <tr>
+                              <th><input type="checkbox" onclick="checkAll(this)"></th>
+            								  <th>Mã</th>
+            								  <th>Tên khách hàng</th>
+            								  <th>Điện thoai</th>
+            								  <th>Email</th>
+            								  <th>Trạng Thái</th>
+            								  <th>Ngày đặt hàng</th>
+                                      <th>Người nhận</th>
+                                      <th>Số điện thoại người nhận</th>
+                                      <th>Hình thức thanh toán</th>
+            								  <th>Tạm tính</th>
+                                      <th>Phí giao hàng</th>
+            								  <th>Tổng cộng</th>
+            								  <th>Địa chỉ giao hàng</th>
+                                      <th>Ngày giao</th>
+            								  <th>Nhân viên phụ trách</th>
+            								  <th></th>
+            								  <th></th>
+            								  <th></th>
+            							   </tr>
+            							</thead>
+            							<tbody id="tab_body">
+            							
+            							</tbody>
+
+
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+               <div class="container my-auto">
+                  <div class="copyright text-center my-auto">
+                     <span>Copyright © Thầy Lộc 2017</span>
+                  </div>
+               </div>
+            </footer>
+         </div>
+         <!-- /.content-wrapper -->
+      </div>
+      <!-- /#wrapper -->
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+      </a>
+      <!-- Logout Modal-->
+      <%- include ('../components/logout_pane.ejs') %>
+
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Page level plugin JavaScript-->
+      <script src="/vendor/datatables/jquery.dataTables.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+      <script src="/js/orderList.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin.min.js"></script>
+      <!-- Demo scripts for this page-->
+      <script src="/js/demo/datatables-demo.js"></script>
+      <script src="/js/admin.js"></script>
+   </body>
+</html>
+

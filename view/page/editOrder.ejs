@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Đơn hàng</title>
+      <!-- Create favicon -->
+      <link rel="shortcut icon" type="image/x-icon" href="/images/logo.jpg" />
+      <!-- Custom fonts for this template-->
+      <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="/css/sb-admin.css" rel="stylesheet">
+      <link href="/css/admin.css" rel="stylesheet">
+	  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   </head>
+   <body id="page-top">
+	<%- include ('../components/nav_bar.ejs') %>
+      <div id="wrapper">
+         <!-- Sidebar -->
+         <%- include ('../components/menu.ejs') %>
+		  <div id="content-wrapper">
+			 <div class="container-fluid">
+				<!-- Breadcrumbs-->
+				<ol class="breadcrumb">
+				   <li class="breadcrumb-item">
+					  <a href="#">Quản lý</a>
+				   </li>
+				   <li class="breadcrumb-item active">Đơn hàng</li>
+				</ol>
+				<!-- /.row -->
+				<form class="spacing" method="post" action="" enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-sm-12 ">
+							<label for="name" class="control-label">Đơn hàng: #<%= order[0].id %></label>  
+						</div>
+					</div>
+					<div class="row ">
+						<div class="col-sm-4 col-lg-2">
+							<label>Tên khách hàng:</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<span><%= order[0].name %></span>							
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Email:</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<span><%= order[0].email %></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Trạng thái:</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<select id="status_choose" name="status" class="form-control">
+								<% switch(order[0].order_status_id){
+									case 1: %>
+									<option value="1" selected>Đã đặt hàng</option>
+									<option value="2">Đã xác nhận đơn hàng</option>
+									<option value="3">Hoàn tất đóng gói</option>
+									<option value="4">Đang giao Hàng</option>
+									<option value="5">Đã giao hàng</option>
+									<option value="6">Đơn hàng đã huy</option>
+										<% break
+
+									case 2: %>
+									<option value="1" >Đã đặt hàng</option>
+									<option value="2" selected>Đã xác nhận đơn hàng</option>
+									<option value="3">Hoàn tất đóng gói</option>
+									<option value="4">Đang giao Hàng</option>
+									<option value="5">Đã giao hàng</option>
+									<option value="6">Đơn hàng đã huy</option>
+										<% break
+
+									case 3: %>
+									<option value="1" >Đã đặt hàng</option>
+									<option value="2">Đã xác nhận đơn hàng</option>
+									<option value="3" selected>Hoàn tất đóng gói</option>
+									<option value="4">Đang giao Hàng</option>
+									<option value="5">Đã giao hàng</option>
+									<option value="6">Đơn hàng đã huy</option>
+										<% break
+
+									case 4: %>
+									<option value="1" >Đã đặt hàng</option>
+									<option value="2">Đã xác nhận đơn hàng</option>
+									<option value="3">Hoàn tất đóng gói</option>
+									<option value="4"selected>Đang giao Hàng</option>
+									<option value="5">Đã giao hàng</option>
+									<option value="6">Đơn hàng đã huy</option>
+										<%break 
+
+									case 5: %>
+									<option value="1" >Đã đặt hàng</option>
+									<option value="2">Đã xác nhận đơn hàng</option>
+									<option value="3">Hoàn tất đóng gói</option>
+									<option value="4">Đang giao Hàng</option>
+									<option value="5"selected>Đã giao hàng</option>
+									<option value="6">Đơn hàng đã huy</option>
+										<%break
+
+									case 6: %>
+									<option value="1" >Đã đặt hàng</option>
+									<option value="2">Đã xác nhận đơn hàng</option>
+									<option value="3">Hoàn tất đóng gói</option>
+									<option value="4">Đang giao Hàng</option>
+									<option value="5">Đã giao hàng</option>
+									<option value="6" selected>Đơn hàng đã huy</option>
+
+										<% break
+								}
+								
+								%>
+								
+							  </select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Ngày đặt hàng:</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<% function getFormatDateTime(datetime){
+								let toArr = datetime.split("")
+								toArr.splice(-5,5)
+								let joinArr = toArr.join("")
+								let res = joinArr.replace("T", " ")
+								return res
+							} 
+							var createdate = getFormatDateTime(order[0].created_date) %> 
+							<span><%= createdate %></span>							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Người nhận</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<input id="receive_name" type="text" name="" value="<%= order[0].shipping_name %>" class="form-control"> 							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Số điện thoại người nhận</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<input id="recei_phonenum" type="text" name="mobile" value="<%= order[0].mobile %>" class="form-control"> 							
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Hình thức thanh toán</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<select id="payment_med" name="transport" class="form-control">
+								<% switch(order[0].payment_method){
+									case 0: %>
+									<option selected value="0">COD</option>
+									<option value="1">Bank</option>
+										<% break
+
+									case 1:%>
+									<option value="0">COD</option>
+									<option selected value="1">Bank</option>
+										<%break
+								}%>
+							  </select>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Tạm tính:</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<span id="total_no_fee"><%= order[0].total.toLocaleString('vi-VN') %> đ</span>							
+						</div>
+					</div>
+					
+					<div class="row">
+						
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Phí giao hàng:</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<input id="ship_fee" type="number" value="<%= order[0].shipping_fee %>"> đ						
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Tổng cộng:</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<span id="total_with_fee"><%= order[0].toltalwfee.toLocaleString('vi-VN') %> đ</span>							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 col-lg-2">
+							<label>Địa chỉ giao hàng</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<input id="address" type="text" name="mobile" placeholder="Số nhà, địa chỉ" value="<%= order[0].housenumber_street %>" class="form-control"> 							
+							<div class="row">
+								<div class="col-sm-4">
+			                        <select onchange="getDistrict()" id="city" name="city" class="form-control">
+											<option value="" >Tỉnh / thành phố</option>
+										<% for(city of cities){ 
+											if(location.provinID === city.id){ %>
+												<option value="<%= city.id %>" selected><%= city.name %></option>
+											<% }else{ %>
+												<option value="<%= city.id %>" selected><%= city.name %></option>
+											<% }
+										} %>
+			                       </select>
+			                     </div>
+			                    <div class="col-sm-4">
+			                        <select onchange="getWard()" id="district" name="district" class="form-control">
+			                            <option value="">Quận / huyện</option>
+										<% for(dist of district){ 
+											if(location.distID === dist.id){ %>
+												<option value="<%= dist.id %>" selected><%= dist.name %></option>
+											<% }else{ %>
+												<option value="<%= dist.id %>" ><%= dist.name %></option>
+											<% }
+										} %>
+			                        </select>
+			                    </div>
+			                    <div class="col-sm-4">
+			                        <select name="ward" id="ward" class="form-control">
+			                            <option value="" >Phường / xã</option>
+										<% for(one_ward of ward){
+											if(location.wardID === one_ward.id){ %>
+												<option value="<%= one_ward.id %>" selected><%= one_ward.name %></option>
+											<% }else{ %>
+												<option value="<%= one_ward.id %>" ><%= one_ward.name %></option>
+											<% } 
+										} %>
+			                        </select>
+			                    </div>
+							</div>		
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Ngày giao hàng</label>  
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+							<% 
+							function getFormatDate(date){
+								let toArr = date.split("")
+								toArr.splice(-14,14)
+								let res = toArr.join("")
+								return res
+							} 
+							var DATE = getFormatDate(order[0].delivered_date)
+							%>
+							<input id="ship_date" type="date" name="" value="<%= DATE %>" class="form-control">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-4 col-lg-2 ">
+							<label>Nhân viên phụ trách</label>
+						</div>
+						<div class="col-sm-8 col-lg-6"> 
+						<select id="staff_choose" name="staff" class="form-control">
+							<% for(one_staff of staff){
+								if(order[0].staff_id === one_staff.id){ %>
+									<option selected value="<%= one_staff.id %>"><%= one_staff.name %></option>
+								<%}else{ %>
+									<option value="<%= one_staff.id %>"><%= one_staff.name %></option>
+								<%
+							 } 
+							} %>
+						  </select>						
+						</div>
+					</div>
+
+					<label class="control-label">Sản phẩm</label>  
+					<div class="form-group">
+	                     <button type="button" id="add_Btn" onclick="appearAddProduct()" class="btn btn-primary btn-sm" >Thêm sản phẩm</button> 
+	                     <button type="button" class="btn btn-danger btn-sm" onclick="removeFromOrder('<%= order[0].id %>')">Xóa sản phẩm</button>
+	                </div>
+					<div class="card mb-3">
+						  <div class="card-body">
+							 <div class="table-responsive">
+								<table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+									   <tr>
+									   	<th><input type="checkbox" onclick="checkAll(this)"></th>
+										  <th>Mã sản phẩm</th>
+										  <th>Tên sản phẩm</th>
+										  <th>Hình ảnh</th>
+										  <th>Giá</th>
+										  <th>Số lượng</th>
+										  <th>Thành tiền</th>
+									   </tr>
+									</thead>
+									<tbody id="tab_order_item">
+										<%
+											for(item of order_item){ 
+												if(item.barcode === '0' && item.product_name === "null"){
+
+												}else{ %>
+													<tr id="pro_row_id<%= item.product_id %>">
+														<td><input name="check_add_product" value="<%= item.product_id %>" type="checkbox"></td>
+														<td >#<%= item.product_id %></td>
+														<td><%= item.name %></td>
+														<td><img src="/images/<%= item.featured_image  %>"></td>
+														<td style="text-wrap: nowrap;"><span><%= item.unit_price.toLocaleString('vi-VN') %></span> đ</td>
+														<td><span id="pro_qty_id<%= item.product_id %>"><%= item.qty %></span></td>
+														<td><span id="pro_totalprice_id<%= item.product_id %>"><%= item.total_price.toLocaleString('vi-VN') %></span> đ</td>
+													</tr>
+													<%}
+												
+											 } 
+										%>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-action">
+						<button type="button" class="btn btn-primary btn-sm" onclick="saveEdit('<%= order[0].customer_id %>','<%= order[0].id %>')">Cập nhật</button>
+					</div>
+					<br>
+				</form>
+			</div>
+				<!-- /.row -->
+				<!-- /.row -->
+				
+               <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+               <div class="container my-auto">
+                  <div class="copyright text-center my-auto">
+                     <span>Copyright © Thầy Lộc 2017</span>
+                  </div>
+               </div>
+            </footer>
+         </div>
+         <!-- /.content-wrapper -->
+      </div>
+      <!-- /#wrapper -->
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+      </a>
+      <!-- Logout Modal-->
+	  <%- include ('../components/logout_pane.ejs') %>
+
+	  <div class="modal fade" style="display: none;padding:2%; backdrop-filter:grayscale(1) blur(2px)" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="display:flex; justify-content:center; align-items:center" role="document" >
+		   <div class="modal-content" style="width:100vw">
+			  <div class="modal-header">
+				 <h5 class="modal-title" id="exampleModalLabel">Chọn thêm sản phẩm</h5>
+				 <button class="close" type="button" data-dismiss="modal" onclick="disappearAddPro()" aria-label="Close">
+				 <span aria-hidden="true" >×</span>
+				 </button>
+			  </div>
+			  <div class="modal-body" style="overflow-y: scroll;height: 80vh; ">
+				<table class="table table-hover" id="dataTable" cellspacing="0">
+				<thead>
+				   <tr>
+					  <th>Mã sản phẩm</th>
+					  <th>Tên sản phẩm</th>
+					  <th>Hình ảnh</th>
+					  <th>Giá</th>
+					  <th></th>
+				   </tr>
+				</thead>
+				<tbody>
+					<%
+						for(pro of product){ 
+							if(pro.barcode === '0' && pro.name === 'null'){
+
+							}else{ %>
+							<tr>
+								<td >#<%= pro.id %></td>
+								<td><%= pro.name %></td>
+								<td><img src="/images/<%= pro.featured_image  %>"></td>
+								<td style="text-wrap: nowrap;"><%= pro.price.toLocaleString('vi-VN') %> đ</td>
+								<td><button class="btn btn-primary" onclick="addtoOrder('<%= pro.id %>','<%= order[0].id %>')">Thêm</button></td>
+							</tr>
+						<% 
+						}
+					} 
+					%>
+				</tbody>
+			</table>
+			</div>
+		   </div>
+		</div>
+	 	</div>
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Page level plugin JavaScript-->
+      <script src="/vendor/datatables/jquery.dataTables.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin.min.js"></script>
+      <!-- Demo scripts for this page-->
+	  <script src="/js/editOrder.js"></script>
+      <script src="/js/demo/datatables-demo.js"></script>
+      <script src="/js/admin.js"></script>
+   </body>
+</html>
+

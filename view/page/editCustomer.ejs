@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Khách hàng</title>
+      <!-- Create favicon -->
+      <link rel="shortcut icon" type="image/x-icon" href="/images/logo.jpg" />
+      <!-- Custom fonts for this template-->
+      <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="/css/sb-admin.css" rel="stylesheet">
+      <link href="/css/admin.css" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   </head>
+   <body id="page-top">
+    <%- include ('../components/nav_bar.ejs') %>
+    <div id="wrapper">
+       <!-- Sidebar -->
+      <%- include ('../components/menu.ejs') %>
+         <div id="content-wrapper">
+            <div class="container-fluid">
+               <!-- Breadcrumbs-->
+               <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                     <a href="#">Quản lý</a>
+                  </li>
+                  <li class="breadcrumb-item active">Khách hàng</li>
+               </ol>
+               <!-- /form -->
+               <div >
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="fullname">Tên</label>  
+                     <div class="col-md-9 col-lg-6">
+                        <input name="fullname" id="fullname" type="text" value="<%= dataCusEdit.name %>" class="form-control">                       
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="email">Email</label>  
+                     <div class="col-md-9 col-lg-6">                           
+                        <input name="email" id="email" type="text" value="<%= dataCusEdit.email %>" class="form-control">                      
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="password">Mật Khẩu</label>  
+                     <div class="col-md-9 col-lg-6">                           
+                        <input name="password" id="password" disabled type="password" value="<%= dataCusEdit.password %>" class="form-control">                      
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="mobile">Số Điện Thoại</label>  
+                     <div class="col-md-9 col-lg-6">                           
+                        <input name="mobile" id="mobile" type="text" value="<%= dataCusEdit.mobile %>" class="form-control">                      
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="loginby">Đăng nhập từ</label>  
+                     <div class="col-md-9 col-lg-6">
+                        <select class="form-control" id="logFrom">
+                           <% switch(dataCusEdit.login_by){
+                              case "form": %>
+                                 <option value="">Chọn</option>
+                                 <option selected value="form">Form</option>
+                                 <option value="google">Google</option>
+                                 <option value="facebook">Facebook</option>
+                                 <% break;
+
+                              case "google": %>
+                                 <option value="">Chọn</option>
+                                 <option value="form">Form</option>
+                                 <option selected value="google">Google</option>
+                                 <option value="facebook">Facebook</option>
+                                 <% break;
+
+                              case "facebook": %>
+                                 <option value="">Chọn</option>
+                                 <option value="form">Form</option>
+                                 <option value="google">Google</option>
+                                 <option selected value="facebook">Facebook</option>
+                                 <% break;
+
+                              default: %>
+                                 <option selected value="">Chọn</option>
+                                 <option value="form">Form</option>
+                                 <option value="google">Google</option>
+                                 <option value="facebook">Facebook</option>
+                                 <% break;
+                           } %>
+                          
+                        </select>
+                                           
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="">Địa chỉ</label>
+                     <div class="col-sm-4">
+                        <select name="city" id="provinceChoose" onchange="getDistrict()" class="form-control">
+                           <option value="">Tỉnh / thành phố</option>
+                           <% for(province of provinces){
+                                 if(province.id === pro_dist_ward.provinID){ %>
+                                    <option selected value="<%= province.id %>"><%= province.name %></option>
+                                 <% } else { %>
+                                 <option value="<%= province.id %>"><%= province.name %></option>
+                                 <% }
+                                 } %>
+                       </select>
+                     </div>
+                    <div class="col-sm-4">
+                        <select name="district" id="districtchoose" onchange="getWard()" class="form-control">
+                            <option value="">Quận / huyện</option>
+                            <% for(district of districts){
+                               if(district.id === pro_dist_ward.distID){ %>
+                                  <option selected value="<%= district.id %>"><%= district.name %></option>
+                              <% }else{ %>
+                               <option value="<%= district.id %>"><%= district.name %></option>
+                              <% }
+                           } %>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <select name="ward" id="wardChoose" class="form-control">
+                            <option value="">Phường / xã</option>
+                            <%for(ward of wards){
+                               if(ward.id === pro_dist_ward.wardID){ %>
+                                  <option selected value="<%= ward.id %>"><%= ward.name %></option>
+                              <% } else { %>
+                               <option value="<%= ward.id %>"><%= ward.name %></option>
+                              <% } 
+                              }%>
+                        </select>
+                    </div>
+                  </div >
+                  <div class="form-group row">
+                    <div class="col-md-9 col-lg-6">
+                        <input type="text" value="<%= dataCusEdit.housenumber_street %>" class="form-control" placeholder="Số nhà, đường" name="housenumumber_street" id="address">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="mobile">Tên người nhận</label>  
+                     <div class="col-md-9 col-lg-6">                           
+                        <input name="shipping_name" id="shipping_name" type="text" value="<%= dataCusEdit.shipping_name %>" class="form-control">                      
+                     </div>
+                  </div>
+
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="mobile">Số điện thoại người nhận</label>  
+                     <div class="col-md-9 col-lg-6">                           
+                        <input name="shipping_mobile" id="shipping_mobile" type="tel" value="<%= dataCusEdit.shipping_mobile %>" class="form-control">                      
+                     </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                     <label class="col-md-12 control-label" for="mobile">Đã kích hoạt</label>  
+                     <div class="col-md-9 col-lg-6">                           
+                        <% switch(dataCusEdit.is_active){
+                           case 0 : %>
+                           <input name="ISactive" id="active" type="checkbox" value="1" >                      
+                              <% break
+
+                           case 1 : %>
+                           <input name="ISactive" id="active" type="checkbox" value="1" checked>                      
+                              <% break
+                        } %>
+                     </div>
+                  </div>
+
+                  <div class="form-action">
+                     <input type="submit" onclick="saveEdit('<%= dataCusEdit.id %>')" class="btn btn-primary btn-sm" value="Cập nhật" name="update">
+                  </div>
+               </div>
+               <!-- /form -->
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+               <div class="container my-auto">
+                  <div class="copyright text-center my-auto">
+                     <span>Copyright © Thầy Lộc 2017</span>
+                  </div>
+               </div>
+            </footer>
+         </div>
+         <!-- /.content-wrapper -->
+      </div>
+      <!-- /#wrapper -->
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+      </a>
+      <!-- Logout Modal-->
+      <%- include ('../components/Logout_pane.ejs') %>
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Page level plugin JavaScript-->
+      <script src="/vendor/datatables/jquery.dataTables.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+      <script src="/js/editCustomer.js"></script>
+      <script src="/js/sb-admin.min.js"></script>
+      <script src="/js/demo/datatables-demo.js"></script>
+      <script src="/js/admin.js"></script>
+   </body>
+</html>
