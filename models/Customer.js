@@ -29,3 +29,4 @@ class Customer extends Base {
     }
 }
 module.exports = new Customer();
+

@@ -4,14 +4,18 @@ const categoryModel = require("../models/Category");
 class HomeController {
   // static không cần nêu đối tượng
   // Còn nếu ko có static thì phải new đối tượng lên
-  // Hiển thị danh sách sản phẩm
   static index = async (req, res) => {
     // trycatch
     try {
       // Lấy 4 sản phẩm nổi bật
       const page = 1;
       const item_per_page = 4;
-      const conds = []; //Không có điều kiện
+      const conds = {
+        category_id: {
+          type: "!=",
+          val: 30,
+        },
+      }; //Không có điều kiện
       let sorts = { featured: "DESC" };
       const featuredProducts = await productModel.getBy(
         conds,
@@ -64,8 +68,6 @@ class HomeController {
         featuredProducts: featuredProducts,
         latestProducts: latestProducts,
         categoryProducts: categoryProducts,
-        
-        
       });
     } catch (error) {
       // 500 là lỗi internal server(Lỗi xảy ra ở server)

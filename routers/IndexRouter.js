@@ -1,5 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const passport = require('passport');
+
+require ('../passport');
+router.use(passport.initialize());
+router.use(passport.session());
+
 const HomeController = require("../controllers/HomeController");
 const ProductController = require("../controllers/ProductController");
 const InformationController = require("../controllers/InformationController");
@@ -50,10 +56,11 @@ router.get("/logout", AuthController.logout);
 router.get("/thong-tin-tai-khoan.html", CustomerController.show);
 
 // Địa chỉ giao hàng mặc định
-router.get(
-  "/dia-chi-giao-hang-mac-dinh.html",
-  CustomerController.shippingDefault
-);
+router.get("/dia-chi-giao-hang-mac-dinh.html",CustomerController.shippingDefault);
+
+
+// Cập nhật địa chỉ giao hàng mặc định
+router.post("/customer/saveShippingAddress",CustomerController.updateShippingDefault);
 
 //Đơn hàng của tôi
 router.get("/don-hang-cua-toi.html", CustomerController.orders);
@@ -86,7 +93,7 @@ router.post(
 // kích hoạt tài khoản
 router.get("/customer/active/token/:token", CustomerController.active);
 
-// kích hoạt tài khoản
+// Thêm vào giỏ hàng
 router.get("/cart/add", CartController.add);
 
 // xóa giỏ hàng
@@ -106,4 +113,49 @@ router.get("/address/wards", AddressController.wards);
 
 //thanh toán (đặt hàng) 
 router.post("/thanh-toan.html", PaymentController.order);
+
+
+// login by google
+router.get("/",AuthController.loginGoogle);
+
+router.get("/auth/google", passport.authenticate('google', { scope: 
+	[ 'email', 'profile' ] })); 
+
+  // Auth Callback 
+router.get( '/auth/google/callback', 
+passport.authenticate( 'google', { 
+  successRedirect: '/success', 
+  failureRedirect: '/failure'
+}));
+
+// Success 
+router.get('/success' ,AuthController.successGoogleLogin); 
+
+// failure 
+router.get('/failure' , AuthController.failureGoogleLogin);
+
+
+// login by facebook
+
+// router.get("/",AuthController.loginGoogle);
+
+// router.get('/auth/facebook',
+//   passport.authenticate('facebook', { scope: ['user_friends', 'manage_pages'] }));
+
+//   router.get( '/auth/facebook/callback', 
+// passport.authenticate( 'facebook', { 
+//   successRedirect: '/success', 
+//   failureRedirect: '/failure'
+// }));
+
+// // Success 
+// router.get('/success' ,AuthController.successFacebookLogin); 
+
+// // failure 
+// router.get('/failure' , AuthController.failureFacebookLogin);
+
+
+
+
+
 module.exports = router;

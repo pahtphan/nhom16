@@ -100,22 +100,26 @@ exports.sendEmail = async (to, subject, content) => {
     // Xài free với 1-2 email thì được
     // Nếu dùng số lượng lớn 1 ngày 1000k mail thì mua
     host: process.env.SMTP_HOST,
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth: {
       // TODO: replace `user` and `pass` values from <https://forwardemail.net>
       user: process.env.SMTP_USERNAME,
       pass: process.env.SMTP_SECRET,
     },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
-
+  
   // send mail with defined transport object
-  await transporter.sendMail({
+  const info = await transporter.sendMail({
     from: process.env.SMTP_USERNAME, // sender address
     to: to, // list of receivers
     subject: subject, // Subject line
     html: content, // html body
   });
+  console.log("Message sent : " + info.messageId);
 };
 
 exports.santitizeData = (data) => {

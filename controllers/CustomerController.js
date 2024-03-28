@@ -2,6 +2,8 @@ const customerModel = require("../models/Customer");
 const orderModel = require("../models/Order");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const provinceModel = require("../models/Province");
+const wardModel = require("../models/Ward");
 class CustomerController {
   // Thông tin tài khoản
   static show = async (req, res) => {
@@ -23,9 +25,74 @@ class CustomerController {
     // trycatch
     try {
       const customer = await customerModel.findEmail(req.session.email);
+      const provinces = await provinceModel.all();
+      let districts = [];
+      let wards = [];
+      let selected_ward_id = "";
+      let selected_district_id = "";
+      let selected_province_id = "";
+      if (customer.ward_id) {
+        selected_ward_id = customer.ward_id;
+
+        const selected_ward = await wardModel.find(selected_ward_id);
+        const selected_district = await selected_ward.getDistricts();
+        const selected_province = await selected_district.getProvince();
+
+        // Tìm danh sách wards và districts
+        wards = await selected_district.getWards();
+
+        districts = await selected_province.getDistricts();
+
+        selected_district_id = selected_district.id;
+        selected_province_id = selected_province.id;
+      }
       res.render("customer/shippingDefault", {
         customer: customer,
+        provinces: provinces,
+        districts: districts,
+        wards: wards,
+        selected_district_id: selected_district_id,
+        selected_province_id: selected_province_id,
+        selected_ward_id: selected_ward_id,
       });
+    } catch (error) {
+      // 500 là lỗi internal server(Lỗi xảy ra ở server)
+      console.log(error); //Dành cho dev xem
+      res.status(500).send(error.message); //Cho người dùng xem
+    }
+  };
+
+  // Cập nhật địa chỉ giao hàng mặc định
+  static updateShippingDefault = async (req, res) => {
+    // trycatch
+    try {
+      const customer = await customerModel.findEmail(req.session.email);
+      // Cập nhật name và mobile
+      customer.shipping_name = req.body.fullname;
+      customer.shipping_mobile = req.body.mobile;
+      customer.ward_id = req.body.ward;
+      customer.district_id = req.body.district;
+      customer.province_id = req.body.province;
+      customer.housenumber_street = req.body.housenumber_street;
+      await customer.update();
+      req.session.message_success =
+        "Đã cập nhật địa chỉ giao hàng mặc định thành công";
+      // Về trang chủ
+      // lưu session xuống file và điều hướng đến trang thông tin tài khoản
+      // Phải cập nhật session.name
+      req.session.name = req.body.fullname;
+      req.session.save(() => {
+        res.redirect("/dia-chi-giao-hang-mac-dinh.html");
+      });
+      // res.render("/customer/saveShippingAddress", {
+      //   customer:customer,
+      //   provinces:provinces,
+      //   districts : districts,
+      //   wards: wards,
+      //   selected_district_id: selected_district_id,
+      //   selected_province_id : selected_province_id,
+      //   selected_ward_id:selected_ward_id,
+      // });
     } catch (error) {
       // 500 là lỗi internal server(Lỗi xảy ra ở server)
       console.log(error); //Dành cho dev xem
@@ -37,7 +104,8 @@ class CustomerController {
   static orders = async (req, res) => {
     // trycatch
     try {
-      const customer = await customerModel.findEmail(req.session.email);
+      const email = req.session.email || "khachvanglai@gmail.com";
+      const customer = await customerModel.findEmail(email);
       const orders = await orderModel.getByCustomerId(customer.id);
       // Duyệt từng đơn hàng để lấy chi tiết đơn hàng
       for (let i = 0; i <= orders.length - 1; i++) {
@@ -68,9 +136,11 @@ class CustomerController {
   static orderDetail = async (req, res) => {
     // trycatch
     try {
-      const customer = await customerModel.findEmail(req.session.email);
+      const email = req.session.email || "khachvanglai@gmail.com";
+      const customer = await customerModel.findEmail(email);
       const orderId = req.params.order_id;
       const order = await orderModel.find(orderId);
+
       order.orderItems = await order.getOrderItems();
       for (let j = 0; j <= order.orderItems.length - 1; j++) {
         order.orderItems[j].product = await order.orderItems[j].getProduct();
@@ -80,8 +150,10 @@ class CustomerController {
 
       // Tìm phường,xã- quận,huyện - tỉnh,thành phố
       const shippingWard = await order.getShippingWard();
-      const shippingDistrict = await shippingWard.getDistrict();
+      console.log(shippingWard);
+      const shippingDistrict = await shippingWard.getDistricts();
       const shippingProvince = await shippingDistrict.getProvince();
+      console.log(shippingProvince);
       res.render("customer/orderDetail", {
         customer: customer,
         order: order,

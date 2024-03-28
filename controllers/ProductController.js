@@ -8,7 +8,12 @@ class ProductController {
   static index = async (req, res) => {
     // trycatch
     try {
-      let conds = {};
+      let conds = {
+        category_id: {
+          type: "!=",
+          val: 30,
+        },
+      };
       let sorts = {};
       // nguyên tắc server luôn nhận giá trị là chuỗi từ trình duyệt web gởi lên
       const page = Number(req.query.page ?? 1);
@@ -112,9 +117,9 @@ class ProductController {
         totalPage : totalPage
       });
     } catch (error) {
-      // 500 là lỗi internal server(Lỗi xảy ra ở server)
-      // console.log(error);Dành cho dev xem
-      res.status(500).send(error.message); //Cho người dùng xem
+       // 500 là lỗi internal server(Lỗi xảy ra ở server)
+       console.log(error); //Dành cho dev xem
+       res.status(500).send(error.message); //Cho người dùng xem
     }
   };
 
@@ -166,9 +171,9 @@ class ProductController {
         relatedProducts : relatedProducts
       });
     } catch (error) {
-      // 500 là lỗi internal server(Lỗi xảy ra ở server)
-      // console.log(error);Dành cho dev xem
-      res.status(500).send(error.message); //Cho người dùng xem
+       // 500 là lỗi internal server(Lỗi xảy ra ở server)
+       console.log(error); //Dành cho dev xem
+       res.status(500).send(error.message); //Cho người dùng xem
     }
   };
 
@@ -200,9 +205,9 @@ class ProductController {
       });
      
     } catch (error) {
-      // 500 là lỗi internal server(Lỗi xảy ra ở server)
-      // console.log(error);Dành cho dev xem
-      res.status(500).send(error.message); //Cho người dùng xem
+       // 500 là lỗi internal server(Lỗi xảy ra ở server)
+       console.log(error); //Dành cho dev xem
+       res.status(500).send(error.message); //Cho người dùng xem
     }
   };
 }

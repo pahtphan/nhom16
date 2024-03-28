@@ -173,7 +173,7 @@
                   <li><a href="mailto:phanthanhphat5797@gmail.com">Mail: phanthanhphat5797@gmail.com</a></li>
                 </ul>
                 <ul class="list-inline">
-                  <li><a href="https://www.facebook.com/HocLapTrinhWebTaiNha.ThayLoc"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="https://www.facebook.com/profile.php?id=100053716631572"><i class="fab fa-facebook-f"></i></a></li>
                   <li><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
                   <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></li>
                   <li><a href="https://www.pinterest.com/"><i class="fab fa-pinterest"></i></a></li>
@@ -251,9 +251,9 @@
           <!-- Google login -->
           <br>
           <div class="text-center">
-            <a class="btn btn-primary google-login" href="#"><i class="fab fa-google"></i></i> Đăng nhập bằng Google</a>
+            <%-include('./google/auth')%>
             <!-- Facebook login -->
-            <a class="btn btn-primary facebook-login" href="#"><i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook</a>
+            <%-include('./facebook/auth')%>
           </div>
         </div>
         <form action="/login" method="POST" role="form" class="form-login">

@@ -47,8 +47,6 @@ class Order extends Base {
         return ward;
     }
 
-
-
     getSubTotalPrice = async () => {
         const orderItems = await orderItemModel.getByOrderId(this.id);
         let totalPrice = 0;

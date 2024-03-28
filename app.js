@@ -2,9 +2,7 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cookieParser());
-// xử lý file .env
-require("dotenv").config();
-
+require('dotenv').config();
 // Xử lý post data
 var bodyParser = require("body-parser");
 
@@ -48,18 +46,21 @@ app.set("views", "./views");
 // Chỉ định các file trong thư mục public (file tĩnh)
 // __dirname là đường dẫn chứa thư mục của file đang chạy,cụ thể là:
 // D:\nodejs\qlsv
-app.use(express.static(`${__dirname}/public`));
-// app.use(express.static(path.join(__dirname,'public')));
+// app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname,'public')));
+console.log(__dirname);
 
 app.use(
   session({
     store: new FileStore(fileStoreOptions),
-    secret: "con bò đang gặm cỏ",
+    secret: "con bò",
     resave: false,
     saveUninitialized: true,
     // cookie: { secure: true }
   })
 );
+
+
 
 // Dùng middleware
 // Trong hàm use là 1 callback function
