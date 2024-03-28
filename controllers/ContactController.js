@@ -6,7 +6,7 @@ class ContactController {
       res.render("contact/form", {});
     } catch (error) {
       // 500 là lỗi internal server(Lỗi xảy ra ở server)
-      // console.log(error);Dành cho dev xem
+      console.log(error); //Dành cho dev xem
       res.status(500).send(error.message); //Cho người dùng xem
     }
   };
@@ -35,7 +35,7 @@ class ContactController {
 
     } catch (error) {
       // 500 là lỗi internal server(Lỗi xảy ra ở server)
-      // console.log(error);Dành cho dev xem
+      console.log(error); //Dành cho dev xem
       res.status(500).send(error.message); //Cho người dùng xem
     }
   };
